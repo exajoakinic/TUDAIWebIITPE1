@@ -1,31 +1,21 @@
 <?php
 
-require_once('models/connectiondb.php');
+require_once('./models/generic_model.php');
 
-class AuthorModel {
-    private $db;
+class AuthorModel extends GenericModel {
 
-    function __construct() {
-        //$connection = new ConnectionDB();
-        $this->db = (new ConnectionDB())->getDB();
+    function __construct(){
+        parent::__construct("authors");
     }
 
-    public function getAll() {
-        $query = $this->db->prepare("SELECT * FROM authors");
-        $query->execute();
-    
-        
-        $authors = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
-        
-        return $authors;
+    public function edit ($author) {
+        $query = $this->db->prepare("UPDATE $this->table SET author = ?, note = ? WHERE id = ?");
+        $query->execute([$author->author, $author->note, $author->id]);
     }
 
-    public function getById ($id) {
-        $query = $this->db->prepare("SELECT * FROM authors WHERE id=?;");
+    public function remove ($id) {
+        $query = $this->db->prepare("DELETE FROM $this->table WHERE id = ?");
         $query->execute([$id]);
-        
-        $author = $query->fetch(PDO::FETCH_OBJ);
-        
-        return $author;
     }
+
 }
