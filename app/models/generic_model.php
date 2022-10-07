@@ -80,8 +80,7 @@ class GenericModel extends ConnectionDB {
 
         $sql = "UPDATE $this->table SET $sql WHERE id = ?";
         $values[] = $item->id;
-        var_dump($sql, "<br>", $values);
-        echo "<br>" . count($values);
+
         $query = $this->db->prepare("$sql");
         
         $query->execute($values);
@@ -109,7 +108,7 @@ class GenericModel extends ConnectionDB {
         }
 
         $sql = "INSERT INTO  $this->table ($listFields) VALUES ($questionMarks)";
-        echo $sql;
+
         $query = $this->db->prepare($sql);
         $query->execute($values);
 

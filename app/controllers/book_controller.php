@@ -175,6 +175,17 @@ class BookController extends GenericController {
             }
         return $book;
     }
+
+    public function listSome($cant = 50)  {
+        $books = $this->model->getAll();
+        $keysToShow = array_rand($books, $cant);
+        $booksToShow = [];
+        foreach($keysToShow as $key) {
+            $booksToShow[] = $books[$key];
+        }
+        $this->completeFields($booksToShow);
+        $this->view->showAll($booksToShow, "Algunos de nuestros libros...");
+    }
 }
 
 

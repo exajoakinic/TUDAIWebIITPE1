@@ -11,11 +11,14 @@ class AuthController {
     function __construct() {
         $this->view = new AuthView();
         $this->model = new UserModel();
+
+        AuthHelper::openSession();
     }
 
     function login() {
-        if (!isset($_SESSION['USER_ID'])) {
+        if (isset($_SESSION['USER_ID'])) { 
             header("location: " . BASE_URL);
+            return;
         }
         if (isset($_POST['error'])) {
             $this->view->showLoginForm($_POST['error']);
@@ -31,7 +34,7 @@ class AuthController {
     private function validate() {
         $user = $this->model->getBy("user", $_POST['user']);
         if ($user && password_verify($_POST['password'], $user->password)) {
-            session_start();
+            //session_start(); 
             $_SESSION['USER_ID'] = $user->id;
             $_SESSION['USER_USER'] = $user->user;
             $_SESSION['USER_LOGGED'] = true;
@@ -47,8 +50,8 @@ class AuthController {
     }
 
     public function logout() {
-        session_start();
+        //session_start();
         session_destroy();
-        header("Location: " . BASE_URL . "login");
+        header("Location: " . BASE_URL);
     }
 }

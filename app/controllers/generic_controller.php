@@ -11,6 +11,8 @@ abstract class GenericController {
         $this->model = $model;
         $this->view = $view;
         $this->fields = $fields; 
+        
+        AuthHelper::openSession();
     }
 
     //abstract protected function getAndValidateBeforeRemove()

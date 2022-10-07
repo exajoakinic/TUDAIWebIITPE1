@@ -20,7 +20,7 @@ $params = explode('/', $action);
 
 switch ($params[0]){
     case 'home' :   
-        echo "home";
+        (new BookController)->listSome();
         break;
     case 'login':
         (new AuthController)->login();
