@@ -4,6 +4,7 @@ require_once './libs/smarty-4.2.1/libs/Smarty.class.php';
 require_once './app/controllers/book_controller.php';
 require_once './app/controllers/author_controller.php';
 require_once './app/controllers/genre_controller.php';
+require_once './app/controllers/auth_controller.php';
 
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
@@ -20,6 +21,12 @@ $params = explode('/', $action);
 switch ($params[0]){
     case 'home' :   
         echo "home";
+        break;
+    case 'login':
+        (new AuthController)->login();
+        break;
+    case 'logout':
+        (new AuthController)->logout();
         break;
     case 'authors' :
         $controller = new AuthorController();
