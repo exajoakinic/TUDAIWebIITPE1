@@ -20,14 +20,41 @@ class GenericModel extends ConnectionDB {
         
         return $items;
     }
+    
+    /**
+     * getAllBy($field, $value)
+     * DEVUELVE TODOS LOS REGISTROS CON $field = $value
+     */
+    function getAllBy($field, $value) {
+        $query = $this->db->prepare("SELECT * FROM $this->table WHERE $field=?;");
+        $query->execute([$value]);
+        
+        $items = $query->fetchAll(PDO::FETCH_OBJ);
+        
+        return $items;
+    }
 
-    public function getById ($id) {
-        $query = $this->db->prepare("SELECT * FROM $this->table WHERE id=?;");
-        $query->execute([$id]);
+    /**
+     * getBy($field, $value)
+     * DEVUELVE PRIMER OCURRENCIA CON $field = $value
+     */
+    public function getBy($field, $value) {
+        // Se intentó reemplazar $field por ? pero la $query devolvía siempre false
+        // entiendo esto no supone un problema de seguridad dado que no es el 
+        // usuario quien completa el campo field.
+
+        
+        $query = $this->db->prepare("SELECT * FROM $this->table WHERE $field = ?;");
+        $query->execute([$value]);
         
         $item = $query->fetch(PDO::FETCH_OBJ);
-        
+
         return $item;
+    }
+    
+    public function getById ($id) {
+        return $this->getBy("id", $id);
+        
     }
 
     public function remove ($id) {
@@ -40,7 +67,9 @@ class GenericModel extends ConnectionDB {
         $sql = "";
         $values = [];
         foreach ($item as $field => $value) {
-            if ($field != "id"){
+            //Verifica que exista el campo para prevenir inyección de un
+            //controlador malicioso, o tonto que pase un field escrito por el usuario
+            if (in_array($field, $this->fields) && $field != "id"){
                 if ($sql) {
                     $sql = "$sql, ";
                 }
@@ -48,6 +77,7 @@ class GenericModel extends ConnectionDB {
                 $values[] = $value;
             }
         }
+
         $sql = "UPDATE $this->table SET $sql WHERE id = ?";
         $values[] = $item->id;
         var_dump($sql, "<br>", $values);
@@ -57,12 +87,17 @@ class GenericModel extends ConnectionDB {
         $query->execute($values);
     }
 
-    public function add ($item) {
+    public final function add ($item) {
         $listFields = "";
         $questionMarks ="";
         $values = [];
         foreach ($item as $field => $value) {
-            if ($field != "id"){
+            //Verifica exista el campo para prevenir inyección sql
+            //de un controlador malicioso:
+            if (!in_array($field, $this->fields)) {
+                return false;
+            }
+            if (in_array($field, $this->fields) && $field != "id"){
                 if ($listFields) {
                     $listFields = "$listFields, ";
                     $questionMarks = "$questionMarks, ";
@@ -72,6 +107,7 @@ class GenericModel extends ConnectionDB {
                 $values[] = $value;
             }
         }
+
         $sql = "INSERT INTO  $this->table ($listFields) VALUES ($questionMarks)";
         echo $sql;
         $query = $this->db->prepare($sql);

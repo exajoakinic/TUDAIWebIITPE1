@@ -24,19 +24,12 @@ class BookModel extends GenericModel {
     }
 
     function getByAuthor($id) {
-        return $this->getBy($id, "id_author");
+        return $this->getAllBy("id_author", $id);
     }
     function getByGenre($id) {
-        return $this->getBy($id, "id_genre");
+        return $this->getAllBy("id_genre", $id);
     }
-    private function getBy($value, $field) {
-        $query = $this->db->prepare("SELECT * FROM $this->table WHERE $field=?;");
-        $query->execute([$value]);
-        
-        $items = $query->fetchAll(PDO::FETCH_OBJ);
-        
-        return $items;
-    }
+
 }
 
     //SE ABSTRAJERON EN GenericModel
