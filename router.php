@@ -1,9 +1,9 @@
 
 <?php
 require_once './libs/smarty-4.2.1/libs/Smarty.class.php';
-require_once './controllers/book_controller.php';
-require_once './controllers/author_controller.php';
-require_once './controllers/genre_controller.php';
+require_once './app/controllers/book_controller.php';
+require_once './app/controllers/author_controller.php';
+require_once './app/controllers/genre_controller.php';
 
 define('BASE_URL', '//'.$_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']).'/');
 
@@ -34,23 +34,33 @@ switch ($params[0]){
             case 'by_genre':
                 $controller->showByGenre($params[2] ?? "");
                 break;
-                default:
-                routeActionsController($params, $controller);
-                break;
+            default:
+            routeActionsController($params, $controller);
+            break;
         }
         break;
     case 'genres' :
         $controller = new GenreController();
         routeActionsController($params, $controller);
         break;
-    
+    case 'book' :
+        $controller = new BookController();
+        $controller->showBookCard($params[1] ?? "");
+        break;
+    case 'cover' :
+        $controller = new BookController();
+        $controller->showFullSizeCover($params[1] ?? "");
+        break;
     default:        
         noRoute();
         break;
 }
 
 function noRoute() {
-    echo('error 404 Page not found');
+    $view=new GenreView;
+    $view->showError("Página no encontrada", "Error - página no encontrada");
+
+    header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
 }
 
 function routeAuthors($params) {
@@ -74,26 +84,20 @@ function routeActionsController($params, $controller) {
         case "edit":
             $controller->edit($params[2] ?? "");
             break;
+        case "edit_form":
+            $controller->showEditForm($params[2] ?? "");
+            break;
+        case "add":
+            $controller->add();
+            break;
+        case "add_form":
+            $controller->showAddForm($params[2] ?? "");
+            break;
         case "remove":
             $controller->remove($params[2] ?? "");
-            break;
-        case "new":
-            $controller->add();
             break;
         default:
             noRoute();
             break;
     }
 }
-/*
-function routerList($params) {
-    switch ($params[1]) {
-        case 'authors': $authorController = new AuthorController();
-                        $authorController->showAll();
-            break;
-        default;
-            noRoute();
-            break;
-        }
-}
-*/

@@ -7,18 +7,19 @@
         </tr>
     </thead>
     <tbody>
-    {foreach from=$genres item=$genre}
+    {foreach from=$genres item=genre}
         <tr>
             <td>
                 {if $linkToBooks}
-                    <a href="books/by_genre/{$genre->id}">{include file="show_more_books.tpl"}</i></a>
+                    <a href="books/by_genre/{$genre->id}" class="more_books">{include file="icon_more_books.tpl"} {$genre->genre}</i></a>
+                {else}
+                    {$genre->genre}
                 {/if}
-                {$genre->genre}
             </td>
             <td>{$genre->note}</td>
-            <td>
-                <a href='genres/edit/{$genre->id}'>EDITAR</a>
-                <a href='genres/remove/{$genre->id}'>ELIMINAR</a>
+            <td class="actions">
+                <a href='genres/edit_form/{$genre->id}' class="actions">{include file="icon_edit.tpl"}</a>
+                <a href='genres/remove/{$genre->id}' class="actions">{include file="icon_remove.tpl"}</a>
             </td>
         </tr>
     {/foreach}

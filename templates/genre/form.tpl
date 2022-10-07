@@ -1,6 +1,6 @@
 {include file="header.tpl"}
-
-<form action='genres/edit/{$genre->id}' method='post'>
+<h1>{$title}</h1>
+<form action='{$action}' method='post'>
     <div class='form-group'>
         <label for='genre'>Nombre</label>
         <input type='text' class='form-control' name='genre' placeholder='' value='{$genre->genre}'>
@@ -10,7 +10,7 @@
         <input type='text' class='form-control' name='note' placeholder='' value='{$genre->note}'>
     </div>
     <button type='submit' class='btn btn-primary'>GUARDAR</button>
-    <a href='genres' class='btn btn-primary'>CANCELAR</a>
+    <a href='{$smarty.server.HTTP_REFERER}' class='btn btn-danger'>CANCELAR</a>
 </form>
 
 {include file="footer.tpl"}

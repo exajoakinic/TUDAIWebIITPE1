@@ -7,18 +7,19 @@
         </tr>
     </thead>
     <tbody>
-    {foreach from=$authors item=$author}
+    {foreach from=$authors item=author}
         <tr>
             <td>
-            {$author->author|truncate:50}
                 {if $linkToBooks}
-                    <a href="books/by_author/{$author->id}">VER LIBROS</a>
+                    <a href="books/by_author/{$author->id}" class="more_books">{include file="icon_more_books.tpl"} {$author->author}</a>
+                {else}
+                    {$author->author}
                 {/if}
             </td>
             <td>{$author->note}</td>
-            <td>
-                <a href='authors/edit/{$author->id}'>EDITAR</a>
-                <a href='authors/remove/{$author->id}'>ELIMINAR</a>
+            <td class="actions">
+                <a href='authors/edit_form/{$author->id}' class="actions">{include file="icon_edit.tpl"}</a>
+                <a href='authors/remove/{$author->id}' class="actions">{include file="icon_remove.tpl"}</a>
             </td>
         </tr>
     {/foreach}

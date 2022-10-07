@@ -1,0 +1,1 @@
+<i class="icon-remove" title="Borrar"></i>
