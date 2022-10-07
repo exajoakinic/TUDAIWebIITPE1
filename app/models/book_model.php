@@ -31,19 +31,3 @@ class BookModel extends GenericModel {
     }
 
 }
-
-    //SE ABSTRAJERON EN GenericModel
-    /*
-    public function edit ($book) {
-        $query = $this->db->prepare("UPDATE $this->table SET isbn = ?, title = ?, id_author = ?, id_genre = ?, price = ?, url_cover = ?  WHERE id = ?");
-        $query->execute([$book->isbn, $book->title, $book->id_author, $book->id_genre, $book->price, $book->url_cover, $book->id]);
-    }
-    */
-    /*
-    public function add ($book) {
-        $query = $this->db->prepare("INSERT INTO  $this->table (isbn, title, id_author, id_genre, price, url_cover) VALUES(?, ?, ?, ?, ?, ?)");
-        $query->execute([$book->isbn, $book->title, $book->id_author, $book->id_genre, $book->price, $book->url_cover]);
-
-        return $this->db->lastInsertId();
-    }
-    */

@@ -15,10 +15,6 @@ abstract class GenericController {
         AuthHelper::openSession();
     }
 
-    //abstract protected function getAndValidateBeforeRemove()
-    //abstract protected function getAndValidateBeforeAdd()
-    //abstract protected function getAndValidateBeforeEdit()
-    //abstract protected function getAndValidateFromPost();
     abstract protected function redirectionAfterEdit($id);
     abstract protected function redirectionAfterAdd($id);
     abstract protected function redirectionAfterRemove($removedItem);
