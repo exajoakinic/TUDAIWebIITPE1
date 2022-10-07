@@ -5,7 +5,9 @@
             <th scope="col">Autor</th>
             <th scope="col">Género</th>
             <th scope="col">Precio</th>
-            <th></th>
+            {if isset($smarty.session.USER_ID)}
+                <th scope="col">Acciones</th>
+            {/if}
         </tr>
     </thead>
     <tbody>
@@ -21,10 +23,13 @@
                 <a href="books/by_genre/{$book->id_genre}" class="more_books">{include file="icon_more_books.tpl"} {$book->genre}</a>
             </td>
             <td class="price">$ {$book->price|number_format:2:",":"."}</td>
-            <td class="actions">
-                <a href='books/edit_form/{$book->id}' class="actions">{include file="icon_edit.tpl"}</a>
-                <a href='books/remove/{$book->id}' class="actions">{include file="icon_remove.tpl"}</a>
-            </td>
+
+            {if isset($smarty.session.USER_ID)}
+                <td class="actions">
+                    <a href='books/edit_form/{$book->id}' class="actions">{include file="icon_edit.tpl"}</a>
+                    <a href='books/remove/{$book->id}' class="actions">{include file="icon_remove.tpl"}</a>
+                </td>
+            {/if}
         </tr>
     {/foreach}
     </tbody>

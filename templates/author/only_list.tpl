@@ -3,7 +3,9 @@
         <tr>
             <th scope="col">Nombre</th>
             <th scope="col">Comentario</th>
-            <th scope="col">Acciones</th>
+            {if isset($smarty.session.USER_ID)}
+                <th scope="col">Acciones</th>
+            {/if}
         </tr>
     </thead>
     <tbody>
@@ -17,10 +19,12 @@
                 {/if}
             </td>
             <td>{$author->note}</td>
-            <td class="actions">
-                <a href='authors/edit_form/{$author->id}' class="actions">{include file="icon_edit.tpl"}</a>
-                <a href='authors/remove/{$author->id}' class="actions">{include file="icon_remove.tpl"}</a>
-            </td>
+            {if isset($smarty.session.USER_ID)}
+                <td class="actions">
+                    <a href='authors/edit_form/{$author->id}' class="actions">{include file="icon_edit.tpl"}</a>
+                    <a href='authors/remove/{$author->id}' class="actions">{include file="icon_remove.tpl"}</a>
+                </td>
+            {/if}
         </tr>
     {/foreach}
     </tbody>

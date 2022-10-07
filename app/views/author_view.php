@@ -4,7 +4,7 @@ require_once "./app/views/generic_view.php";
 
 class AuthorView extends GenericView {
 
-    function showAll($authors, $title = "Listado de Autores", $isAdmin = true, $linkToBooks=true) {
+    function showAll($authors, $title = "Listado de Autores", $linkToBooks=true) {
         $this->smarty->assign("title", $title);
         $this->smarty->assign("authors", $authors);
         $this->smarty->assign("linkToBooks", $linkToBooks);

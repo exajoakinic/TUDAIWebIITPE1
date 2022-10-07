@@ -86,6 +86,9 @@ class BookController extends GenericController {
      * (sobreescrive función padre porque tiene requerimientos adicionales)
      */
     function showEditForm ($id) {
+        //VERIFICA QUE ESTÉ LOGUEADO
+        AuthHelper::checkLoggedIn();
+
         //VERIFICA SI EXISTE EL LIBRO A EDITAR
         $item = $this-> model-> getById($id);
         if (!($item)) {
@@ -105,6 +108,9 @@ class BookController extends GenericController {
      * (sobreescrive función padre porque tiene requerimientos adicionales)
      */
     function showAddForm () {
+        //VERIFICA QUE ESTÉ LOGUEADO
+        AuthHelper::checkLoggedIn();
+
         $authors = (new AuthorModel)->getAll();
         $genres = (new GenreModel)->getAll();
         

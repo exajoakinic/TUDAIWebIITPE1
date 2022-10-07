@@ -1,5 +1,7 @@
 <?php
 
+require_once "./app/helpers/auth_helper.php";
+
 abstract class GenericController {
     protected $model;
     protected $view;
@@ -40,6 +42,9 @@ abstract class GenericController {
      * MUESTRA FORMULARIO EDICIÓN
      */
     public function showEditForm ($id) {
+        //VERIFICA QUE ESTÉ LOGUEADO
+        AuthHelper::checkLoggedIn();
+
         //VERIFICA SI EXISTE LA ENTIDAD A EDITAR
         $item = $this-> model-> getById($id);
         if (!($item)) {
@@ -54,6 +59,9 @@ abstract class GenericController {
      * MUESTRA FORMULARIO AGREGAR
      */
     public function showAddForm () {
+        //VERIFICA QUE ESTÉ LOGUEADO
+        AuthHelper::checkLoggedIn();
+
         $this->view->showAddForm();
     }
 
@@ -63,6 +71,9 @@ abstract class GenericController {
      * Responsabilidad de redirección: redirectionAfterEdit())
      */
     function edit ($id) {
+        //VERIFICA QUE ESTÉ LOGUEADO
+        AuthHelper::checkLoggedIn();
+
         $item = $this->getAndValidateBeforeEdit($id);
 
         $this->model->edit($item);
@@ -91,6 +102,9 @@ abstract class GenericController {
      * Responsabilidad de redirección: redirectionAfterAdd()
      */
     function add () {
+        //VERIFICA QUE ESTÉ LOGUEADO
+        AuthHelper::checkLoggedIn();
+
         $item = $this->getAndValidateFromPost();
         $id = $this->model->add($item);
         $this->redirectionAfterAdd($id);
@@ -110,6 +124,9 @@ abstract class GenericController {
      * 2 Muestra mensaje error si no debió eliminar
      */
     public function remove ($id) {
+        //VERIFICA QUE ESTÉ LOGUEADO
+        AuthHelper::checkLoggedIn();
+
         $item = $this->getAndValidateBeforeRemove($id);
         if ($item) {
             $this->model->remove($id);

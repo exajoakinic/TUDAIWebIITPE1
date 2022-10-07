@@ -3,10 +3,9 @@ require_once "./app/views/generic_view.php";
 
 class BookView extends GenericView{
     
-    function showBookCard($book, $title = "Ficha de libro", $isAdmin = true) {
+    function showBookCard($book, $title = "Ficha de libro") {
         $this->smarty->assign("title", $title);
         $this->smarty->assign("book", $book);
-        $this->smarty->assign("isAdmin", $isAdmin);
         $this->smarty->display("book/book_card.tpl");
     }
 
@@ -16,16 +15,14 @@ class BookView extends GenericView{
         $this->smarty->display("book/book_show_cover_full_size.tpl");
     }
 
-    function showAll($books, $title = "Listado de Libros", $isAdmin = true) {
+    function showAll($books, $title = "Listado de Libros") {
         $this->smarty->assign("title", $title);
         $this->smarty->assign("books", $books);
-        $this->smarty->assign("isAdmin", $isAdmin);
         $this->smarty->display("book/list.tpl");
     }    
 
-    function list($books, $isAdmin = true) {
+    function list($books) {
         $this->smarty->assign("books", $books);
-        $this->smarty->assign("isAdmin", $isAdmin);
         $this->smarty->display("book/only_list.tpl");
     }
 

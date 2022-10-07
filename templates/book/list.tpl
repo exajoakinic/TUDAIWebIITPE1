@@ -1,7 +1,7 @@
 {include file="header.tpl"}
 
 <h1>{$title}</h1>
-{if isAdmin}
+{if isset($smarty.session.USER_ID)}
     <a href="books/add_form" class="actions">{include file="icon_new.tpl"} Agregar Libro</a>
 {/if}
 
