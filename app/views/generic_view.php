@@ -5,6 +5,10 @@ class GenericView {
 
     function __construct(){
         $this->smarty = new Smarty();
+        echo session_status();
+        if (session_status() != 2) {
+            session_start();
+        }   
     }
 
     function showError($message, $title) {

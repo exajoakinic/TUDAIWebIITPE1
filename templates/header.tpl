@@ -31,7 +31,7 @@
               <a class="nav-item nav-link" aria-current="page" href="logout">Logout ({$smarty.session.USER_USER})</a>
             {else} 
               <a class="nav-item nav-link" aria-current="page" href="login">Login</a>
-            {/if}          
+            {/if}
           </div>
         </div>
       </nav>
