@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `db_books`
+-- Base de datos: `id19679558_db_books`
 --
-CREATE DATABASE IF NOT EXISTS `db_books` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `db_books`;
+CREATE DATABASE IF NOT EXISTS `id19679558_db_books` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `id19679558_db_books`;
 
 -- --------------------------------------------------------
 
