@@ -20,19 +20,10 @@ abstract class GenericController {
     abstract protected function redirectionAfterRemove($removedItem);
 
     /**
-     * COMPLETAR CAMPOS DESDE OTRAS TABLAS
-     * La función queda vacía en el controlador genérico,
-     * sólo la reescriben controladores que lo necesiten.
-     */
-    protected function completeFields($items) {   
-    }
-
-    /**
      * MUESTRA TODOS LOS ITEMS DE LA ENTIDAD
      */
     function showAll() {
         $items = $this-> model-> getAll();
-        $this->completeFields($items);
         $this-> view-> showAll($items);
     }
 
@@ -131,6 +122,7 @@ abstract class GenericController {
             $this->redirectionAfterRemove($item);
         }
     }
+
     /**
      * VALIDACIÓN ANTES DE ELIMINAR
      */

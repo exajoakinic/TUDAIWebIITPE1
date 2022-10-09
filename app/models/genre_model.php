@@ -6,6 +6,7 @@ class GenreModel extends GenericModel {
 
     function __construct(){
         parent::__construct("genres",
-                            ["genre", "note"]);
+                            ["genre", "note"],
+                            ["orderByField" => "genre"]);
     }
 }

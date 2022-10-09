@@ -5,15 +5,34 @@ require_once('./app/models/connection_db.php');
 class GenericModel extends ConnectionDB {
     protected $table;
     private $fields;
+    private $fieldsOnSelect;
+    private $joinSentence;
+    private $orderByField;
+    private $orderBySentence;
 
-    function __construct($nameTable, $fields){
+    function __construct($nameTable, $fields, 
+            $params = [ "fieldsOnSelect" => "*",
+                        "joinSentence" => "",
+                        "orderByField" => ""]){
         parent::__construct();
         $this->table = $nameTable;
         $this->fields = $fields;
+        $this->fieldsOnSelect = $params["fieldsOnSelect"] ?? "*";
+        $this->joinSentence = $params["joinSentence"] ?? "";
+
+        $this->setOrderBy($params["orderByField"] ?? "");
+    }
+
+    private function setOrderBy($field) {
+        if (empty($field)) {
+            $this->orderBySentence = "";
+        }
+
+        $this->orderBySentence = "ORDER BY $field";
     }
 
     public function getAll() {
-        $query = $this->db->prepare("SELECT * FROM $this->table;");
+        $query = $this->db->prepare("SELECT $this->fieldsOnSelect FROM $this->table $this->joinSentence $this->orderBySentence;");
         $query->execute();
         
         $items = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
@@ -26,7 +45,7 @@ class GenericModel extends ConnectionDB {
      * DEVUELVE TODOS LOS REGISTROS CON $field = $value
      */
     function getAllBy($field, $value) {
-        $query = $this->db->prepare("SELECT * FROM $this->table WHERE $field=?;");
+        $query = $this->db->prepare("SELECT $this->fieldsOnSelect FROM $this->table $this->joinSentence WHERE $field=? $this->orderBySentence;");
         $query->execute([$value]);
         
         $items = $query->fetchAll(PDO::FETCH_OBJ);
@@ -37,14 +56,14 @@ class GenericModel extends ConnectionDB {
     /**
      * getBy($field, $value)
      * DEVUELVE PRIMER OCURRENCIA CON $field = $value
+     * $field debe ser un campo de la tabla correspondiente al modelo.
      */
-    public function getBy($field, $value) {
+    public function getBy($localField, $value) {
         // Se intentó reemplazar $field por ? pero la $query devolvía siempre false
         // entiendo esto no supone un problema de seguridad dado que no es el 
         // usuario quien completa el campo field.
 
-        
-        $query = $this->db->prepare("SELECT * FROM $this->table WHERE $field = ?;");
+        $query = $this->db->prepare("SELECT $this->fieldsOnSelect FROM $this->table $this->joinSentence WHERE  $this->table.$localField = ?;");
         $query->execute([$value]);
         
         $item = $query->fetch(PDO::FETCH_OBJ);
@@ -113,5 +132,12 @@ class GenericModel extends ConnectionDB {
         $query->execute($values);
 
         return $this->db->lastInsertId();
+    }
+
+    function countBy($localField, $id){
+        $query = $this->db->prepare("SELECT COUNT(*) AS result FROM $this->table WHERE $this->table.$localField = ?");
+        $query->execute([$id]);
+
+        return $query->fetch(PDO::FETCH_OBJ)->result;
     }
 }

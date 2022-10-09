@@ -23,21 +23,13 @@ class BookController extends GenericController {
         header("location:" . BASE_URL . "books");
     }
 
-    //CON ESTOS MÉTODOS ESTOY ROMPIENDO EL MODELO MVC, 
-    //PORQUE LLAMO A ESTE CONTROLLER DESDE OTROS CONTROLLERS
-    //PENSÉ HACER UN HELPER, PERO TAMBIÉN LO ESTARÍA ROMPIENDO PORQUE
-    //EL HELPER NO DEBERÍA LLAMAR AL MODEL.
-    //SÓLO ME QUEDARÍA LA OPCIÓN DE REPETIR CÓDIGO, PERO NO QUIERO HACER ESO
-    //LA SOLUCIÓN SERÍA UTILIZAR EL INNER JOIN Y QUE ESTAS FUNCIONES ESTÉN 
-    //EN EL MODEL
-    //
+
     /**
      * TRAE LOS LIBROS POR GENERO y completa los datos
      * desde tablas secundarias por php
      */
     function getByGenre($id) {
         $books = $this->model->getByGenre($id);
-        $this->completeFields($books);
         return $books;
     }
     /**
@@ -46,7 +38,6 @@ class BookController extends GenericController {
      */
     function getByAuthor($id) {
         $books = $this->model->getByAuthor($id);
-        $this->completeFields($books);
         return $books;
     }
 
@@ -61,7 +52,7 @@ class BookController extends GenericController {
             die;
         }
 
-        $this->completeFields([$book]);
+        //$this->completeFields([$book]);
 
         $this->view->showBookCard($book, $book->title);
     }
@@ -118,7 +109,7 @@ class BookController extends GenericController {
     }
 
 
-    function showByGenre($id) {
+    function showByGenre($id, $params = ["title"  => ""]) {
         //Verifico existencia del género
         $genre = (new GenreModel)->getById($id);
         if (!($genre)) {
@@ -128,8 +119,8 @@ class BookController extends GenericController {
         }
         
         $books = $this->model->getByGenre($id);
-        $this->completeFields($books);
-        $this->view->showAll($books, "Libros con género &quot$genre->genre&quot");
+        $title = "Libros con género &quot$genre->genre&quot";
+        $this->view->showAll($books, $title);
     }
         
     function showByAuthor($id) {
@@ -142,13 +133,13 @@ class BookController extends GenericController {
         }
 
         $books = $this->model->getByAuthor($id);
-        $this->completeFields($books);
         $this->view->showAll($books, "Libros con autor &quot$author->author&quot");
     }
 
     /**
      * Completa datos de cada elemento de un arreglo con libros
      */
+    /*
     protected function completeFields($books) {
         $genreModel = new GenreModel();
         $authorModel = new AuthorModel();
@@ -157,6 +148,7 @@ class BookController extends GenericController {
             $book->author = $authorModel->getById($book->id_author)->author;
         }
     }
+    */
 
     /**
      * Sobreescrive función de validación de post por necesitar más validaciones
@@ -178,12 +170,15 @@ class BookController extends GenericController {
 
     public function listSome($cant = 50)  {
         $books = $this->model->getAll();
-        $keysToShow = array_rand($books, $cant);
+        if (count($books) < $cant) {
+            $cant = count($books);
+        }
+        $selectedKeys = array_rand($books, $cant);
         $booksToShow = [];
-        foreach($keysToShow as $key) {
+        foreach($selectedKeys as $key) {
             $booksToShow[] = $books[$key];
         }
-        $this->completeFields($booksToShow);
+        //$this->completeFields($booksToShow);
         $this->view->showAll($booksToShow, "Algunos de nuestros libros...");
     }
 }
