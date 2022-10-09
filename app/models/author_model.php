@@ -6,6 +6,7 @@ class AuthorModel extends GenericModel {
 
     function __construct(){
         parent::__construct("authors",
-                            ["author", "note"]);
+                            ["author", "note"],
+                            ["orderByField" => "author"]);
     }
 }
