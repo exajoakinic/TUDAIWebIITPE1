@@ -1,3 +1,4 @@
+<div class="container">
 <table class="table">
     <thead>
         <tr>
@@ -29,3 +30,4 @@
     {/foreach}
     </tbody>
 </table>
+</div>

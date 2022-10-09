@@ -1,3 +1,5 @@
+<div class="container">
+
 <table class="table table-striped books">
     <thead>
         <tr>
@@ -34,3 +36,5 @@
     {/foreach}
     </tbody>
 </table>
+
+</div>

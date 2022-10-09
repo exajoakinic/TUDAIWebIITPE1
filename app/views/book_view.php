@@ -5,24 +5,34 @@ class BookView extends GenericView{
     
     function showBookCard($book, $title = "Ficha de libro") {
         $this->smarty->assign("title", $title);
-        $this->smarty->assign("book", $book);
+        $this->smarty->assign("book", $this->sanitizeHTML($book));
         $this->smarty->display("book/book_card.tpl");
     }
 
     function showFullSizeCover($book, $title) {
-        $this->smarty->assign("book", $book);
+        $this->smarty->assign("book", $this->sanitizeHTML($book));
         $this->smarty->assign("title", $title);
         $this->smarty->display("book/book_show_cover_full_size.tpl");
     }
 
-    function showAll($books, $title = "Listado de Libros") {
+    function showAll($books, $title = "Listado de Libros", $showHeader=true, $showFooter=true, $showTitle=true) {
+        if ($showHeader) {
+            $this->showHeader($title);
+        }
+
         $this->smarty->assign("title", $title);
-        $this->smarty->assign("books", $books);
+        $this->smarty->assign("books", $this->sanitizeHTML($books));
+        $this->smarty->assign("showTitle", $showTitle);
+        $this->smarty->assign("showFooter", $showFooter);
         $this->smarty->display("book/list.tpl");
+
+        if ($showFooter) {
+            $this->showFooter();
+        }
     }    
 
     function list($books) {
-        $this->smarty->assign("books", $books);
+        $this->smarty->assign("books", $this->sanitizeHTML($books));
         $this->smarty->display("book/only_list.tpl");
     }
 
