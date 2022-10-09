@@ -25,11 +25,9 @@ class GenreController extends GenericController {
     protected function getAndValidateBeforeRemove($id) {
         //Traigo el elemento utilizando la clase padre y su primera validación de existencia
         $genre = parent::getAndValidateBeforeRemove($id);
-        $bookModel = new BookModel();  
-
-        if ($bookModel->countByGenre($id) > 0) {
+        $referencedBooks =(new BookModel())->getByGenre($id);
+        if (count($referencedBooks)>0) {
             //MUESTRO PÁGINA DE ERROR PORQUE NO SE PUEDE BORRAR EL AUTOR
-            $referencedBooks = (new BookController())->getByGenre($id);
             $this->view->showErrorCantRemove($genre, $referencedBooks);
             die;
         }

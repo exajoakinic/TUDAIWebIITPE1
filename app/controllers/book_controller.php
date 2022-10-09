@@ -22,25 +22,7 @@ class BookController extends GenericController {
     protected function redirectionAfterRemove($removedItem) {
         header("location:" . BASE_URL . "books");
     }
-
-
-    /**
-     * TRAE LOS LIBROS POR GENERO y completa los datos
-     * desde tablas secundarias por php
-     */
-    function getByGenre($id) {
-        $books = $this->model->getByGenre($id);
-        return $books;
-    }
-    /**
-     * TRAE LOS LIBROS POR AUTOR y completa los datos
-     * desde tablas secundarias por php
-     */
-    function getByAuthor($id) {
-        $books = $this->model->getByAuthor($id);
-        return $books;
-    }
-
+    
     /**
      * MUESTRA FICHA DE LIBRO LUEGO DE VALIDAR SU EXISTENCIA
      */
