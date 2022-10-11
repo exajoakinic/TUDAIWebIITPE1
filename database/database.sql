@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `id19685369_db_books`
+-- Base de datos: `id19689598_db_books`
 --
-CREATE DATABASE IF NOT EXISTS `id19685369_db_books` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `id19685369_db_books`;
+CREATE DATABASE IF NOT EXISTS `id19689598_db_books` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `id19689598_db_books`;
 
 -- --------------------------------------------------------
 
@@ -1664,10 +1664,7 @@ INSERT INTO `authors` (`id`, `author`, `note`) VALUES
 (1621, 'Zuran, Maria Eugenia', NULL),
 (1622, 'Zuvic, Mariana', NULL),
 (1623, 'Zweig, Stephan', NULL),
-(1624, 'AUTOR NO DEFINIDO', NULL),
-(1630, '34', ''),
-(1631, 'www@33', 'ASDASFAS'),
-(1632, 'Joaquín', 'ASDASFAS');
+(1624, 'AUTOR NO DEFINIDO', NULL);
 
 -- --------------------------------------------------------
 

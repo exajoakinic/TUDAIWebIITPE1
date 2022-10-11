@@ -58,6 +58,9 @@ switch ($params[0]){
         $controller = new BookController();
         $controller->showFullSizeCover($params[1] ?? "");
         break;
+    case 'phpinfo':
+        phpinfo();
+        break;
     default:        
         noRoute();
         break;
