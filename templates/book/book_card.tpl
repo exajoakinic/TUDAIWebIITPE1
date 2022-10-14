@@ -17,10 +17,10 @@
                 <i>Título: </i>{$book->title}
             </li>
             <li>
-                <i>Autor: </i> <a href="books/by_author/{$book->id_author}" class="more_books">{include file="icon_more_books.tpl"} {$book->author}</a>
+                <i>Autor: </i> <a href="books/by_author/{$book->id_author}/{UrlHelper::toUrl($book->author)}" class="more_books">{include file="icon_more_books.tpl"} {$book->author}</a>
             </li>
             <li>
-                <i>Género: </i> <a href="books/by_genre/{$book->id_genre}" class="more_books">{include file="icon_more_books.tpl"} {$book->genre}</a>
+                <i>Género: </i> <a href="books/by_genre/{$book->id_genre}/{UrlHelper::toUrl($book->genre)}" class="more_books">{include file="icon_more_books.tpl"} {$book->genre}</a>
             </li>
             <li>
                 <i>Precio: </i> $ {$book->price|number_format:2:",":"."}
