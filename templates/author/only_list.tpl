@@ -13,11 +13,7 @@
     {foreach from=$authors item=author}
         <tr>
             <td>
-                {if $linkToBooks}
-                    <a href="books/by_author/{$author->id}" class="more_books">{include file="icon_more_books.tpl"} {$author->author}</a>
-                {else}
-                    {$author->author}
-                {/if}
+                <a href="books/by_author/{$author->id}" class="more_books">{include file="icon_more_books.tpl"} {$author->author}</a>
             </td>
             <td>{$author->note}</td>
             {if isset($smarty.session.USER_ID)}

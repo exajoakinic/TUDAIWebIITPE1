@@ -29,34 +29,30 @@ switch ($params[0]){
         (new AuthController)->logout();
         break;
     case 'authors' :
-        $controller = new AuthorController();
-        routeActionsController($params, $controller);
+        routeActionsController($params, new AuthorController());
         break;
     case 'books' :
-        $controller = new BookController();
+        $bookController = new BookController();
         switch ($params[1] ?? "") {
             case 'by_author':
-                $controller->showByAuthor($params[2] ?? "");
+                $bookController->showByAuthor($params[2] ?? "");
                 break;
             case 'by_genre':
-                $controller->showByGenre($params[2] ?? "");
+                $bookController->showByGenre($params[2] ?? "");
                 break;
             default:
-            routeActionsController($params, $controller);
+            routeActionsController($params, $bookController);
             break;
         }
         break;
     case 'genres' :
-        $controller = new GenreController();
-        routeActionsController($params, $controller);
+        routeActionsController($params, new GenreController());
         break;
     case 'book' :
-        $controller = new BookController();
-        $controller->showBookCard($params[1] ?? "");
+        (new BookController())->showBookCard($params[1] ?? "");
         break;
     case 'cover' :
-        $controller = new BookController();
-        $controller->showFullSizeCover($params[1] ?? "");
+        (new BookController())->showFullSizeCover($params[1] ?? "");
         break;
     default:        
         noRoute();
@@ -66,19 +62,13 @@ switch ($params[0]){
 function noRoute() {
     $view=new GenreView;
     $view->showError("Página no encontrada", "Error - página no encontrada");
-
     header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
 }
 
-function routeAuthors($params) {
-    $authorController = new AuthorController();
-    routeActionsController($params, $authorController);
-}
-function routeBooks($params) {
-    $authorController = new BookController();
-    routeActionsController($params, $authorController);
-}
-
+/**
+ * Rutea el listar / editar / crear / eliminar
+ * utilizando el controlador recibido por parámetro.
+ */
 function routeActionsController($params, $controller) {
     $action = "list";
     if (!empty($params[1])){

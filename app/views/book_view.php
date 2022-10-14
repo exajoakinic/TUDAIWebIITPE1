@@ -15,20 +15,11 @@ class BookView extends GenericView{
         $this->smarty->display("book/book_show_cover_full_size.tpl");
     }
 
-    function showAll($books, $title = "Listado de Libros", $showHeader=true, $showFooter=true, $showTitle=true) {
-        if ($showHeader) {
-            $this->showHeader($title);
-        }
-
+    function showAll($books, $title = "Listado de Libros", $message=null) {
         $this->smarty->assign("title", $title);
+        $this->smarty->assign("message", $message);
         $this->smarty->assign("books", $this->sanitizeHTML($books));
-        $this->smarty->assign("showTitle", $showTitle);
-        $this->smarty->assign("showFooter", $showFooter);
         $this->smarty->display("book/list.tpl");
-
-        if ($showFooter) {
-            $this->showFooter();
-        }
     }    
 
     function list($books) {

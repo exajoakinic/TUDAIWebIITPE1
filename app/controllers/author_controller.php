@@ -19,9 +19,19 @@ class AuthorController extends GenericController {
         header("location:" . BASE_URL . "authors");
     }
     protected function redirectionAfterRemove($removedItem) {
-        header("location:" . BASE_URL . "authors");
+        //header("location:" . BASE_URL . "authors");
+        $this->showAll("Se ha eliminado correctamente el autor $removedItem->author");
     }
     
+    /**
+     * MUESTRA TODOS LOS ITEMS DE LA ENTIDAD
+     */
+    function showAll($message = null) {
+        $items = $this-> model-> getAll();
+        $this-> view-> showAll($items, "Listado de autores", $message);
+    }
+
+
     protected function getAndValidateBeforeRemove($id) {
         //Traigo el elemento utilizando la clase padre y su primera validación de existencia
         $author = parent::getAndValidateBeforeRemove($id);

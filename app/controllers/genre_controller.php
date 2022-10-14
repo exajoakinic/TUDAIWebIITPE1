@@ -22,6 +22,14 @@ class GenreController extends GenericController {
         header("location:" . BASE_URL . "genres");
     }
     
+    /**
+     * MUESTRA TODOS LOS ITEMS DE LA ENTIDAD
+     */
+    function showAll($message = null) {
+        $items = $this-> model-> getAll();
+        $this-> view-> showAll($items, "Listado de géneros", $message);
+    }
+
     protected function getAndValidateBeforeRemove($id) {
         //Traigo el elemento utilizando la clase padre y su primera validación de existencia
         $genre = parent::getAndValidateBeforeRemove($id);

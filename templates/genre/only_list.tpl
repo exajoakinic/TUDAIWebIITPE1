@@ -13,11 +13,7 @@
     {foreach from=$genres item=genre}
         <tr>
             <td>
-                {if $linkToBooks}
-                    <a href="books/by_genre/{$genre->id}" class="more_books">{include file="icon_more_books.tpl"} {$genre->genre}</i></a>
-                {else}
-                    {$genre->genre}
-                {/if}
+                <a href="books/by_genre/{$genre->id}" class="more_books">{include file="icon_more_books.tpl"} {$genre->genre}</i></a>
             </td>
             <td>{$genre->note}</td>
             {if isset($smarty.session.USER_ID)}
