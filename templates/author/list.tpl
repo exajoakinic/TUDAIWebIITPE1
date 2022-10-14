@@ -5,7 +5,7 @@
 {/if}
 
 <h1>{$title}</h1>
-{if isset($smarty.session.USER_ID)}
+{if AuthHelper::isAdmin()}
     <a href="authors/add_form" class="actions">{include file="icon_new.tpl"} Agregar Autor</a>
 {/if}
 

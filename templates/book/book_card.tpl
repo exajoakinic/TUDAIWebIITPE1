@@ -25,7 +25,7 @@
             <li>
                 <i>Precio: </i> $ {$book->price|number_format:2:",":"."}
             </li>
-            {if isset($smarty.session.USER_ID)}
+            {if AuthHelper::isAdmin()}
                 <div class="actions">
                 <a href='books/edit_form/{$book->id}' class="actions">{include file="icon_edit.tpl"} Editar</a>
                 <a href='books/remove/{$book->id}' class="actions">{include file="icon_remove.tpl"} Eliminar</a>

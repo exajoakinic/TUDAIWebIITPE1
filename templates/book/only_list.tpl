@@ -7,7 +7,7 @@
             <th scope="col">Autor</th>
             <th scope="col">Género</th>
             <th scope="col">Precio</th>
-            {if isset($smarty.session.USER_ID)}
+            {if AuthHelper::isAdmin()}
                 <th scope="col">Acciones</th>
             {/if}
         </tr>
@@ -26,7 +26,7 @@
             </td>
             <td class="price">$ {$book->price|number_format:2:",":"."}</td>
 
-            {if isset($smarty.session.USER_ID)}
+            {if AuthHelper::isAdmin()}
                 <td class="actions">
                     <a href='books/edit_form/{$book->id}' class="actions">{include file="icon_edit.tpl"}</a>
                     <a href='books/remove/{$book->id}' class="actions">{include file="icon_remove.tpl"}</a>

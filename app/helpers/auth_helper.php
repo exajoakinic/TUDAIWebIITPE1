@@ -10,16 +10,32 @@ class AuthHelper {
         }  
     }
 
+    /**
+     * Devuelve nombre del usuario logueado
+     */
+    public static function getUser(){
+        if (AuthHelper::isAdmin()){
+            return $_SESSION['USER_USER'];
+        }
+        return null;
+    }
+    /**
+     * Devuelve booleano informando si es admin o no
+     */
+    public static function isAdmin() {
+        AuthHelper::openSession();
+        return isset($_SESSION['USER_ID']);
+    }
+
      /**
      * Verifica que el user este logueado y si no lo está
      * lo redirige al login.
      */
     public static function checkLoggedIn() {
-        AuthHelper::openSession();
-        if (!isset($_SESSION['USER_ID'])) {
+        If (!AuthHelper::isAdmin()){
             header("Location: " . BASE_URL . 'login');
             die();
-        }
+        };
     }
 
     
