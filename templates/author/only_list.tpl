@@ -13,7 +13,7 @@
     {foreach from=$authors item=author}
         <tr>
             <td>
-                <a href="books/by_author/{$author->id}/{$author->author|lower|regex_replace:'/[^abcdefghijklmnopqrstuvwxyz1234567890\s]+/':''|regex_replace:'/[\s]+/':'-'|regex_replace:'/--/':'-'}" class="more_books">{include file="icon_more_books.tpl"} {$author->author}</a>
+                <a href="books/by_author/{$author->id}/{UrlHelper::toUrl($author->author)}" class="more_books">{include file="icon_more_books.tpl"} {$author->author}</a>
             </td>
             <td>{$author->note}</td>
             {if AuthHelper::isAdmin()}

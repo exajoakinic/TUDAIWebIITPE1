@@ -13,7 +13,7 @@
     {foreach from=$genres item=genre}
         <tr>
             <td>
-                <a href="books/by_genre/{$genre->id}/{$genre->genre|lower|regex_replace:'/[^abcdefghijklmnopqrstuvwxyz1234567890\s]+/':''|regex_replace:'/[\s]+/':'-'|regex_replace:'/--/':'-'}" class="more_books">{include file="icon_more_books.tpl"} {$genre->genre}</i></a>
+                <a href="books/by_genre/{$genre->id}/{UrlHelper::toUrl($genre->genre)}" class="more_books">{include file="icon_more_books.tpl"} {$genre->genre}</i></a>
             </td>
             <td>{$genre->note}</td>
             {if AuthHelper::isAdmin()}

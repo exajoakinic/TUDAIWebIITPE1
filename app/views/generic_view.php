@@ -1,4 +1,5 @@
 <?php
+require_once './app/helpers/url_helper.php';
 
 class GenericView {
     protected $smarty;
