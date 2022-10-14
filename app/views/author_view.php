@@ -4,10 +4,10 @@ require_once "./app/views/generic_view.php";
 
 class AuthorView extends GenericView {
 
-    function showAll($authors, $title = "Listado de Autores", $linkToBooks=true) {
+    function showAll($authors, $title = "Listado de Autores", $message = null) {
+        $this->smarty->assign("message", $message);
         $this->smarty->assign("title", $title);
         $this->smarty->assign("authors", $this->sanitizeHTML($authors));
-        $this->smarty->assign("linkToBooks", $linkToBooks);
         $this->smarty->display("author/list.tpl");
     }
 

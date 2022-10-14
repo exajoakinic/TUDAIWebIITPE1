@@ -27,8 +27,8 @@
             <a class="nav-item nav-link active" href="books">Libros</span></a>
             <a class="nav-item nav-link" href="authors">Autores</a>
             <a class="nav-item nav-link" href="genres">Géneros</a>
-            {if isset($smarty.session.USER_ID)}
-              <a class="nav-item nav-link" aria-current="page" href="logout">Logout ({$smarty.session.USER_USER})</a>
+            {if AuthHelper::isAdmin()}
+              <a class="nav-item nav-link" aria-current="page" href="logout">Logout ({AuthHelper::getUser()})</a>
             {else} 
               <a class="nav-item nav-link" aria-current="page" href="login">Login</a>
             {/if}

@@ -20,9 +20,18 @@ class BookController extends GenericController {
         header("location:" . BASE_URL . "book/$id");
     }
     protected function redirectionAfterRemove($removedItem) {
-        header("location:" . BASE_URL . "books");
+        //header("location:" . BASE_URL . "books");
+        $this->listSome("Se ha eliminado correctamente el libro '$removedItem->title'");
     }
     
+    /**
+     * MUESTRA TODOS LOS ITEMS DE LA ENTIDAD
+     */
+    function showAll($message = null) {
+        $items = $this-> model-> getAll();
+        $this-> view-> showAll($items, "Listado de libros", $message);
+    }
+
     /**
      * MUESTRA FICHA DE LIBRO LUEGO DE VALIDAR SU EXISTENCIA
      */
@@ -33,8 +42,6 @@ class BookController extends GenericController {
             header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
             die;
         }
-
-        //$this->completeFields([$book]);
 
         $this->view->showBookCard($book, $book->title);
     }
@@ -119,20 +126,6 @@ class BookController extends GenericController {
     }
 
     /**
-     * Completa datos de cada elemento de un arreglo con libros
-     */
-    /*
-    protected function completeFields($books) {
-        $genreModel = new GenreModel();
-        $authorModel = new AuthorModel();
-        foreach($books as $book) {
-            $book->genre = $genreModel->getById($book->id_genre)->genre;
-            $book->author = $authorModel->getById($book->id_author)->author;
-        }
-    }
-    */
-
-    /**
      * Sobreescrive función de validación de post por necesitar más validaciones
      */
     protected function getAndValidateFromPost() {
@@ -150,7 +143,13 @@ class BookController extends GenericController {
         return $book;
     }
 
-    public function listSome($cant = 50)  {
+    /**
+     * Lista algunos libros de forma aleatoria
+     * Se utilizó para no sobrecargar de gusto el servidor
+     * Lo ideal habría sido paginar.
+     */
+    public function listSome($message = null)  {
+        $cant = 30;
         $books = $this->model->getAll();
         if (count($books) < $cant) {
             $cant = count($books);
@@ -160,7 +159,6 @@ class BookController extends GenericController {
         foreach($selectedKeys as $key) {
             $booksToShow[] = $books[$key];
         }
-        //$this->completeFields($booksToShow);
-        $this->view->showAll($booksToShow, "Algunos de nuestros libros...");
+        $this->view->showAll($booksToShow, "Algunos de nuestros libros...", $message);
     }
 }

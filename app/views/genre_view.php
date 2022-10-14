@@ -2,10 +2,10 @@
 require_once "./app/views/generic_view.php";
 
 class GenreView extends GenericView{
-    function showAll($genres, $title = "Listado de Géneros", $linkToBooks = true) {
+    function showAll($genres, $title = "Listado de Géneros", $message=null) {
         $this->smarty->assign("title", $title);
+        $this->smarty->assign("message", $message);
         $this->smarty->assign("genres", $this->sanitizeHTML($genres));
-        $this->smarty->assign("linkToBooks", $linkToBooks);
         $this->smarty->display("genre/list.tpl");
     }
 

@@ -4,11 +4,12 @@ require_once('./app/models/connection_db.php');
 
 class GenericModel extends ConnectionDB {
     protected $table;
-    private $fields;
-    private $fieldsOnSelect;
-    private $joinSentence;
-    private $orderByField;
-    private $orderBySentence;
+    private $fields; //campos de la tabla a utilizar en verificacion
+
+    private $fieldsOnSelect; //campos que irán en el select
+    private $joinSentence; //fragmento JOIN
+    private $orderByField; //String con campo/campos a utilizar: ORDER BY $orderByField
+    private $orderBySentence; //sentencia ORDER BY generada por setOrderBy($field)
 
     function __construct($nameTable, $fields, 
             $params = [ "fieldsOnSelect" => "*",

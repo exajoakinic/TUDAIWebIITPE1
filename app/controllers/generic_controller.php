@@ -20,14 +20,6 @@ abstract class GenericController {
     abstract protected function redirectionAfterRemove($removedItem);
 
     /**
-     * MUESTRA TODOS LOS ITEMS DE LA ENTIDAD
-     */
-    function showAll() {
-        $items = $this-> model-> getAll();
-        $this-> view-> showAll($items);
-    }
-
-    /**
      * MUESTRA FORMULARIO EDICIÓN
      */
     public function showEditForm ($id) {
@@ -117,6 +109,7 @@ abstract class GenericController {
         AuthHelper::checkLoggedIn();
 
         $item = $this->getAndValidateBeforeRemove($id);
+
         if ($item) {
             $this->model->remove($id);
             $this->redirectionAfterRemove($item);

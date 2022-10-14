@@ -7,7 +7,7 @@
             <th scope="col">Autor</th>
             <th scope="col">Género</th>
             <th scope="col">Precio</th>
-            {if isset($smarty.session.USER_ID)}
+            {if AuthHelper::isAdmin()}
                 <th scope="col">Acciones</th>
             {/if}
         </tr>
@@ -16,7 +16,7 @@
     {foreach from=$books item=book}
         <tr>
             <td>
-                <a href="book/{$book->id}" class="more_books"><i class="icon-book"></i> {$book->title}</a>
+                <a href="book/{$book->id}/{$book->title|lower|regex_replace:'/[^abcdefghijklmnopqrstuvwxyz1234567890\s]+/':''|regex_replace:'/[\s]+/':'-'|regex_replace:'/--/':'-'}" class="more_books"><i class="icon-book"></i> {$book->title}</a>
             </td>
             <td>
                 <a href="books/by_author/{$book->id_author}" class="more_books">{include file="icon_more_books.tpl"} {$book->author}</a>
@@ -26,7 +26,7 @@
             </td>
             <td class="price">$ {$book->price|number_format:2:",":"."}</td>
 
-            {if isset($smarty.session.USER_ID)}
+            {if AuthHelper::isAdmin()}
                 <td class="actions">
                     <a href='books/edit_form/{$book->id}' class="actions">{include file="icon_edit.tpl"}</a>
                     <a href='books/remove/{$book->id}' class="actions">{include file="icon_remove.tpl"}</a>

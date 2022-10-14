@@ -68,3 +68,18 @@ div.bookCard .actions {
 footer {
     margin-top: 1em;
 }
+
+div.generic_message {
+    border-radius: 10px;
+    border: 1px black solid;
+    background-color: aqua;
+    width:75%;
+    padding:10px;
+    margin:10px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+div.generic_message p {
+    margin:0;
+}
