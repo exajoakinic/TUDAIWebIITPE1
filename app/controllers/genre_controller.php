@@ -19,7 +19,8 @@ class GenreController extends GenericController {
         header("location:" . BASE_URL . "genres");
     }
     protected function redirectionAfterRemove($removedItem) {
-        header("location:" . BASE_URL . "genres");
+        //header("location:" . BASE_URL . "genres");
+        $this->showAll("Se ha eliminado correctamente el género '$removedItem->genre'");
     }
     
     /**

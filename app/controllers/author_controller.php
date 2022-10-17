@@ -20,7 +20,7 @@ class AuthorController extends GenericController {
     }
     protected function redirectionAfterRemove($removedItem) {
         //header("location:" . BASE_URL . "authors");
-        $this->showAll("Se ha eliminado correctamente el autor $removedItem->author");
+        $this->showAll("Se ha eliminado correctamente el autor '$removedItem->author'");
     }
     
     /**
