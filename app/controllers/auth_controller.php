@@ -39,7 +39,7 @@ class AuthController {
             $_SESSION['USER_USER'] = $user->user;
             $_SESSION['USER_LOGGED'] = true;
 
-            header("Location: " . BASE_URL . "authors");
+            header("Location: " . BASE_URL);
         } else {
             $this->loginFail();
         }
