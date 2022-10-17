@@ -65,6 +65,7 @@ abstract class GenericController {
 
     /**
      * VALIDACIÓN ANTES DE EDITAR
+     * Devuelve item con el id y los datos recibidos por post
      */
     protected function getAndValidateBeforeEdit($id) {
         if (!$this->model->getById($id)) {

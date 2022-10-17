@@ -143,7 +143,6 @@ class BookController extends GenericController {
             header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
             die;
             }
-
         // Verifica si se cargó una imagen por archivo solicitando al model que su creación si es necesario
         if (!empty($_FILES["img_file_cover"]["name"])) {
             $newUrlFile = $this->model->insertCoverFile($_FILES["img_file_cover"]);
@@ -151,6 +150,10 @@ class BookController extends GenericController {
             $book->url_cover = $newUrlFile;
         }
 
+        // Fuerza que el precio sea un valor numérico
+
+        //$book->price = number_format($book->price, 2, '.', '');
+        $book->price = floatval($book->price);
         return $book;
     }
 
