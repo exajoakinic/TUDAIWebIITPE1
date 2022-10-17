@@ -130,16 +130,48 @@ class BookController extends GenericController {
      */
     protected function getAndValidateFromPost() {
         $book = parent::getAndValidateFromPost();
+        // Verifica que exista el autor recibido
         if (!(new AuthorModel)->getById($book->id_author)) {
             $this->view->showError("No se encontró el autor", "Error al obtener autor");
             header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
             die;
         }
+
+        // Verifica que exista el género recibido
         if (!(new GenreModel)->getById($book->id_genre)) {
             $this->view->showError("No se encontró el género", "Error al obtener género");
             header($_SERVER["SERVER_PROTOCOL"]." 400 Bad Request");
             die;
             }
+
+        // Verifica si se cargó una imagen por archivo solicitando al model que su creación si es necesario
+        if (!empty($_FILES["img_file_cover"]["name"])) {
+            $newUrlFile = $this->model->insertCoverFile($_FILES["img_file_cover"]);
+            //Referencia url_cover a la nueva dirección
+            $book->url_cover = $newUrlFile;
+        }
+
+        return $book;
+    }
+
+    /**
+     * Sobreescrive validación antes de editar por necesitar eliminar la tapa del servidor
+     */
+    protected function getAndValidateBeforeEdit($id) {
+        $book = parent::getAndValidateBeforeEdit($id);
+        $oldBook = $this->model->getById($id);
+        if (!empty($_FILES["img_file_cover"]["name"])
+            || $book->url_cover != $oldBook->url_cover) {
+                        $this->model->removeCoverFile($oldBook->url_cover);
+        }
+        return $book;
+    }
+    /**
+     * Sobreescrive validación antes de borrar por necesitar eliminar la tapa del servidor
+     */
+    protected function getAndValidateBeforeRemove($id) {
+        $book = parent::getAndValidateBeforeRemove($id);
+        $this->model->removeCoverFile($book->url_cover);
         return $book;
     }
 
