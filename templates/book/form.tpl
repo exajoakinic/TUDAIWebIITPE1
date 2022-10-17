@@ -1,6 +1,6 @@
 {include file="header.tpl"}
 <h1>{$title}</h1>
-<form action='{$action}' method='post'>
+<form action='{$action}' method='post' enctype="multipart/form-data">
     <div class='form-group'>
         <label for='isbn'>ISBN</label>
         <input type='text' class='form-control' name='isbn' placeholder='' value='{$book->isbn}'>
@@ -41,7 +41,12 @@
 
     <div class='form-group'>
         <label for='url_cover'>URL Tapa</label>
-        <input type='text' class='form-control' name='url_cover' placeholder='' value='{$book->url_cover}'>
+        <input type='text' class='form-control' name='url_cover' placeholder='No se tendrá en cuenta si agregar archivo local' value='{$book->url_cover}'>
+    </div>    
+
+    <div class='form-group'>
+        <label for='img_file_cover'>Archivo Local Tapa</label>
+        <input type='file' class='form-control' name='img_file_cover' accept="image/png, image/gif, image/jpeg">
     </div>    
     
     <button type='submit' class='btn btn-primary'>GUARDAR</button>

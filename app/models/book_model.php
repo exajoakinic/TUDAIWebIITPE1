@@ -37,4 +37,26 @@ class BookModel extends GenericModel {
         return $this->getAllBy("id_genre", $id);
     }
 
+    /**
+     * Guarda en el servidor la imagen y devuelve ruta hacia el mismo
+     */
+    function insertCoverFile($file){
+        $filePath = "images/covers/" . uniqid("", true) . "." . strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
+        if (!file_exists('images/covers')) {
+            mkdir('images/covers', 0777, true); 
+        }
+
+        move_uploaded_file($file["tmp_name"], $filePath);
+        return $filePath;
+    }
+
+    /**
+     * Elimina archivo del servidor
+     */
+    function removeCoverFile($file){
+        if (file_exists($file)) {  
+            return unlink($file);
+        }
+        return false;
+    }
 }
