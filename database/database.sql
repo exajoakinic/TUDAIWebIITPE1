@@ -1678,7 +1678,7 @@ CREATE TABLE `books` (
   `title` varchar(96) NOT NULL,
   `id_author` int(11) NOT NULL,
   `id_genre` int(11) NOT NULL,
-  `price` decimal(10,0) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
   `url_cover` varchar(96) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
